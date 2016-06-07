@@ -1,0 +1,81 @@
+options:
+  install_sources:
+    default: |
+      - 'deb https://packagecloud.io/grafana/stable/debian/ wheezy main'
+    type: string
+    description: |
+      YAML list of additional installation sources, as a string. The number of
+      install_sources must match the number of install_keys. For example:
+        install_sources: |
+         - ppa:project1/ppa
+         - ppa:project2/ppa
+  install_keys:
+    default: |
+      - '7AD95B3F'
+    type: string
+    description: |
+      YAML list of GPG keys for installation sources, as a string. For apt repository
+      URLs, use the public key ID used to verify package signatures. For 
+      other sources such as PPA, use empty string. This list must have the 
+      same number of elements as install_sources, even if the key items are 
+      all empty string. An example to go with the above for install_sources:
+        install_keys: |
+         - ""
+         - ""
+  install_file:
+    default: ""
+    type: string
+    description: |
+      Location where grafana .deb file can be found. If set install_sources and
+      install_keys options are ignored. Example:
+        install_file: http://my.company.com/packages/grafana/grafana_3.0.0_amd64.deb
+  app_mode:
+    default: 'production'
+    type: string
+    description: 'production or development'
+  anonymous:
+    default: False
+    type: boolean
+    description: Whether to allow anonymous users, defaults to False.
+  anonymous_role:
+    default: 'Viewer'
+    type: string
+    description: The role given to anonymous users if enabled.
+  datasources:
+    default: ""
+    description: |
+      List of datasources in format:
+        - 'prometheus,BootStack Prometheus,proxy,http://localhost:9090,,,'
+    type: string
+    description: |
+      - type,name,access,url,password,user,database
+  default_dashboards:
+    default: ""
+    type: string
+    description: |
+      List of default dashboards to be loaded on Grafana storage backend
+      (default: sqlite3 backend)
+  nagios_context:
+    default: "juju"
+    type: string
+    description: |
+      A string that will be prepended to instance name to set the host name
+      in nagios. So for instance the hostname would be something like:
+          juju-myservice-0
+      If you're running multiple environments with the same services in them
+      this allows you to differentiate between them.
+  nagios_servicegroups:
+    default: "juju"
+    type: string
+    description: |
+      Comma separated list of nagios servicegroups for the graphite check
+  port:
+    type: string
+    default: "3000"
+    description: |
+        The port grafana will expose web services on.
+  admin_password:
+    default: ""
+    type: string
+    description: |
+      Grafana admin password. Default, pwgen(16) random password
